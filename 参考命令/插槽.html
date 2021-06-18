@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="appa" v-cloak>
+    <sun-cpon ref="suncpon"></sun-cpon>
+    <sun-cpon ref="suncpon">
+        <span slot="cc1">我我被插入了</span>
+        <span slot="cc2">我我被插入了</span>
+    </sun-cpon>
+</div>
+</body>
+
+
+</html>
+
+<template id='sunCponid'>
+    <div>
+        <p>演示插槽使用</p>
+        <slot name = "cc1"><span>默认插槽1</span></slot>
+        <slot name = "cc2"><span>默认插槽2</span></slot>
+        <slot name = "cc3"><span>默认插槽3</span></slot>
+    </div>
+</template>
+
+
+<script>
+  const sunCpon = {
+    template: `#sunCponid`,
+    props: {
+    },
+    data() {
+      return {
+      }
+    },
+    methods:{
+    }
+  }
+
+  const vue = new Vue({
+    el: "#appa",
+    data: {
+    },
+    methods: {
+    },
+    components: {
+      sunCpon,
+    }
+  })
+</script>
+
+
+
+

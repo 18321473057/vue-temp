@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      [v-cloac] {
+        disabled: none
+      }
+
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <components v-model="ffuncStr"></components>
+    <cpn-c :zcp="wcp" :z_list="w_list" @zdy-func="ffunc"></cpn-c>
+    <cpn-c></cpn-c>
+</div>
+</body>
+
+</html>
+
+<template id='cpnC'>
+    <div>
+        <h2>{{ pname }}</h2>
+        <span @click="zclick(zcp)">{{ zcp }}</span>
+        <span v-for="item in z_list">{{ item }}</span>
+        <cpnz></cpnz>
+    </div>
+</template>
+<template id='cpnZ'>
+    <div>
+        <h2>我是子组件</h2>
+        <span>子组件滴滴滴滴滴</span>
+        <span>子组件哒哒哒哒ccc哒</span>
+    </div>
+</template>
+
+<script>
+
+  const cpn子组件 = Vue.extend()
+
+  //全局组件
+  // Vue.component('cpnC',cpnC);
+
+
+  //子传父
+
+  const cpnC = {
+    template: `#cpnC`,
+    // props: ['zcp', 'zList'],
+    props: {
+      zcp: String,
+      z_list: {
+        type: Array,
+        default: ["我是默认值"]
+      },
+    },
+    data() {
+      console.log("data必须是方法, 就是为了给每一个组件都返回一个对象,而不是公用一个对象")
+      return {
+        pname: '我是父标题'
+      }
+    },
+    methods: {
+      zclick(item) {
+        this.$emit('zdy-func', item);
+      }
+    },
+    //儿子的儿子
+    components: {
+      cpnz: {
+        template: `#cpnZ`
+      },
+    }
+  }
+
+  const vue = new Vue({
+    el: "#12app",
+    data: {
+      ffuncStr: '31212312',
+      wcp: "父传,v-bind 不支持驼峰大写, 必须全小写,或者定义 cName -> 绑定 :c-name",
+      w_list: ['一', '二', '三', '四']
+    },
+    //计算属性
+    computed: {},
+    methods: {
+      ffunc(item) {
+        console.log("从自组件传来的东西"+item);
+        this.ffuncStr = "从自组件传来的东西"+item;
+      },
+    },
+    components: {
+      cpnC
+    }
+  })
+</script>
+
+
+
+
+
+

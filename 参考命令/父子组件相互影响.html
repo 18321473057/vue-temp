@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="appa" v-cloak>
+    <label>我是父组件</label> <input v-model="parent_str">
+    <sun-cpon :son_str="parent_str"   @event_son_inp="eventPInp"></sun-cpon>
+</div>
+</body>
+
+
+</html>
+
+<template id='sunCponid'>
+    <div>
+        <label>我是子组件</label> <input v-bind:value="son_str" @input="sonInp">
+        <label>辅助查看 {{son_str}}</label>
+    </div>
+</template>
+<script>
+  const sunCpon = {
+    template: `#sunCponid`,
+    props: {
+      son_str: String
+    },
+    data() {
+      return {
+        dson_str: this.son_str,
+      }
+    },
+    methods:{
+      sonInp(){
+        this.dson_str=event.target.value;
+        this.$emit("event_son_inp",event.target.value);
+      }
+    }
+  }
+
+  const vue = new Vue({
+    el: "#appa",
+    data: {
+      parent_str: '我原本是父元素',
+    },
+    //计算属性
+    computed: {},
+    methods: {
+      eventPInp(item){
+        this.parent_str = item
+      }
+    },
+    components: {
+      sunCpon,
+    }
+  })
+</script>
+
+
+
+

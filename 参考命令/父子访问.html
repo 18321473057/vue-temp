@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="appa" v-cloak>
+    <sun-cpon ref="suncpon"></sun-cpon>
+    <button @click="but"> 我是父组件按钮, 我要看子组件alert</button>
+    <button @click="butsv"> 我是父组件按钮,我要自己打印子组件数据</button>
+</div>
+</body>
+
+
+</html>
+
+<template id='sunCponid'>
+    <div>
+    </div>
+</template>
+
+
+<script>
+  const sunCpon = {
+    template: `#sunCponid`,
+    props: {
+    },
+    data() {
+      return {
+        dv:'我是自组件的数据',
+      }
+    },
+    methods:{
+      showa(){
+         alert('子组件亲自alert')
+      }
+    }
+  }
+
+  const vue = new Vue({
+    el: "#appa",
+    data: {
+    },
+    methods: {
+      but(){
+        // this.$children[0].showa();
+        this.$refs.suncpon.showa();
+      },
+      butsv(){
+        // alert(this.$children[0].dv);
+        alert(this.$refs.suncpon.dv);
+      }
+    },
+    components: {
+      sunCpon,
+    }
+  })
+</script>
+
+
+
+

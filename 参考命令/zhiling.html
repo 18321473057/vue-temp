@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+      [v-cloac] {
+        disabled: none
+      }
+
+      .rcolor {
+        color: red;
+        font-size: 2em;
+      }
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    <button @click="changeOnce">点击测试v-once</button>
+    <span>{{ vonce }}</span>
+    <span v-once>{{ vonce }}</span>
+    <ul>
+        <li @click="maxLi(idx)" :class='{rcolor:isrcolor== idx}' v-for="(item,idx) in liList">
+            {{ idx }}:: {{ item }}
+        </li>
+    </ul>
+
+    <!--在定义事件时,事件的方法省略小括号,但方法定义了一个形参; vue会将浏览器默认生成的event事件当做参数传递过去 -->
+    <button @click="tEvent">vue自动将event事件传递过去</button>
+    <button @click="tEvent2(123 ,$event)"> 普通传参和event事件我都要</button>
+
+    <button @click.stop=""> .stop阻止冒泡</button>
+    <button @click.prevent=""> .prevent阻止默认事件,比如提交表单</button>
+    <button @keyup.enter=""> .13/.enter 监听键帽的名字或编码</button>
+
+
+    <h1 v-if="true">if</h1>
+    <h1 v-else-if="true">else-if </h1>
+    <h1 v-else="">else </h1>
+
+
+    <h1>虚拟dom-- vdom 会复用元素, 如果不想复用在标签中加key , 会根据key的名字来匹配是否复用</h1>
+    <input key="v1">
+    <input key="v2">
+
+    <h1>v-if是是否存在这个元素, v-show 是操作display:nonw(频繁切换v-show) </h1>
+
+    <input v-bind:value="sx">
+    <input :value="sx">
+    <p>{{ sx }}</p>
+    <input v-model.lazy="sx">
+    <input :value="sx" @input="sx=$event.target.value" style="display: block">
+
+
+    <input type="radio" value="男" v-model="sex">
+    <input type="radio" value="女" v-model="sex">lList
+    <label style="display: block">您选择的性别是{{ sex }}</label>
+
+    <label v-for="item in ocheckboxAr">
+        <input type="checkbox" :value="item" v-model="checkboxAr">{{ item }}
+    </label>
+
+    <label style="display: block">{{ checkboxAr }}</label>
+
+    <select v-model="selects">
+        <option v-for="item in  oselect"> {{ item }}</option>
+    </select>
+
+    <select v-model="selectAr" multiple>
+        <option v-for="item in  oselect"> {{ item }}</option>
+    </select>
+
+
+
+
+</div>
+</body>
+
+<script>
+
+  window.onload = function () {
+    let ar = [11, 22, 33, 44, 55, 66, 77, 88, 98]
+    for (idx in ar) {
+      console.log(idx)
+    }
+    for (vl of ar) {
+      console.log(vl)
+    }
+  }
+
+
+  const vue = new Vue({
+    el: "#app",
+    data: {
+      sx: '双向数据绑定',
+      vonce: '第一次',
+      liList: ['didi', 'baobao', '小火车', '开动了'],
+      isrcolor: -1,
+      sex: '男',
+      ocheckboxAr: ['游戏', '爬山', '打球', '吃饭', '妹子'],
+      checkboxAr: [],
+      oselect: ["AA", "BB", "CC", "DD"],
+      selects: "CC",
+      selectAr: ["CC", "BB"],
+    },
+    //计算属性
+    computed: {}
+    ,
+    methods: {
+      changeOnce() {
+        this.vonce = "第二次";
+      },
+      maxLi(idx) {
+        that = this;
+        that.isrcolor = idx;
+      },
+      tEvent(event) {
+        console.log("vue 默认事件传递", event);
+      },
+      tEvent2(va, event) {
+        console.log("普通传参和event事件我都要", va, event);
+      }
+
+    },
+  })
+</script>
+</html>
+
+
+
+
+
+

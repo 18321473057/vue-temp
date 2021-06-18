@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="appa" v-cloak>
+    <sun-cpon  ></sun-cpon>
+    <sun-cpon >
+        <template slot-scope="slotName">
+            <ui  >
+                <li v-for="item in slotName.data"  style="list-style-type: circle">
+                    {{item}}
+                </li>
+            </ui>
+        </template>
+    </sun-cpon>
+
+</div>
+</body>
+
+
+</html>
+
+<template id='sunCponid'>
+    <div>
+        <p>演示作用域插槽使用</p>
+        <slot  :data="lList">
+            <ui  >
+                <li v-for="item in lList"  style="list-style-type: square">
+                    {{item}}
+                </li>
+            </ui>
+        </slot>
+    </div>
+</template>
+
+
+<script>
+  const sunCpon = {
+    template: `#sunCponid`,
+    props: {},
+    data() {
+      return {
+        lList :['张飞','赵云','黄忠','马超','关羽']
+      }
+    },
+    methods: {}
+  }
+
+  const vue = new Vue({
+    el: "#appa",
+    data: {},
+    methods: {},
+    components: {
+      sunCpon,
+    }
+  })
+</script>
+
+
+
+
